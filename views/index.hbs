@@ -1,1 +1,9 @@
-<h2>Hello world, this's index</h2>
+{{!-- todos --}}
+
+<ul>
+  {{#each todos}}
+    <li>
+      {{ this.name }}
+    </li>
+  {{/each}}
+</ul>
