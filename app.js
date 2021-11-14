@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
-const mongoose = require('mongoose') // 載入 mongoose
-mongoose.connect('mongodb://localhost/2-3_todo_list') // 設定與資料庫連線
-const db = mongoose.connection // 儲存連線狀態、透過這個常數使用不同連線狀態的指令
 const Todo = require('./models/todo') // 載入 todo model
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose') // 載入 mongoose
+const db = mongoose.connection // 儲存連線狀態、透過這個常數使用不同連線狀態的指令
+const PORT = process.env.PORT || 3000 // heroku自動放入
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/2-3_todo_list'
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }) // 設定與資料庫連線
+
 
 db.on('error', () => {
   console.log('mongodb error!')
@@ -78,6 +81,6 @@ app.post('/todos/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.listen(3000, () => {
-  console.log('App is running on port 3000.')
+app.listen(PORT, () => {
+  console.log(`App is running on http://localhost:${PORT}`)
 })
